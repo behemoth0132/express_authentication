@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('../config/ppConfig');
+const db = require('../models');
 
 router.get('/signup', (req, res) => {
   res.render('auth/signup');
@@ -8,6 +9,12 @@ router.get('/signup', (req, res) => {
 
 router.get('/login', (req, res) => {
   res.render('auth/login');
+});
+
+router.get('/logout', (req, res) => {
+  req.logOut(); // logs the user out of the session
+  req.flash('success', 'Logging out... See you next time!');
+  res.redirect('/');
 });
 
 router.post('/login', passport.authenticate('local', {
